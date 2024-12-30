@@ -19,6 +19,7 @@ This template should help get you started developing with Vue 3 in Vite.
     - [Setup](#setup)
       - [yarn](#yarn)
       - [init Vue3 application](#init-vue3-application)
+      - [Add Storybook](#add-storybook)
     - [VSCode Plugins](#vscode-plugins)
 
 
@@ -101,6 +102,14 @@ yarn lint
 ```bash
 # Yarn ^v4.11
 $ yarn dlx create-vue@latest
+```
+
+#### Add Storybook
+
+[Reference](https://storybook.js.org/docs/get-started/frameworks/vue3-vite?renderer=vue)
+
+```bash
+yarn dlx storybook@latest init
 ```
 
 ### VSCode Plugins
