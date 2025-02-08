@@ -34,10 +34,9 @@ jobs:
           yarn install
           yarn build:storybook
       - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
-          path: docs
+          path: docs/
 
   deploy:
     environment:
