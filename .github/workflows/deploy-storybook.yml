@@ -31,7 +31,7 @@ jobs:
       - run: corepack enable
       - name: install and build
         run: |
-          yarn install --production=true
+          yarn install
           yarn build:storybook
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
