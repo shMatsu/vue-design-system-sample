@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/vue3'
+import DocumentationTemplate from './DocumentationTemplate.mdx'
 
 const preview: Preview = {
   parameters: {
@@ -8,7 +9,11 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    docs: {
+      page: DocumentationTemplate,
+    },
   },
+  tags: ['autodocs'],
 }
 
 export default preview

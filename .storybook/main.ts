@@ -12,5 +12,9 @@ const config: StorybookConfig = {
     name: '@storybook/vue3-vite',
     options: {},
   },
+  docs: {
+    // NOTE: 自動生成されるドキュメントページの名称
+    defaultName: 'Documentation',
+  },
 }
 export default config
