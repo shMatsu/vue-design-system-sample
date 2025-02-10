@@ -1,4 +1,4 @@
-import { fn } from '@storybook/test'
+import { expect, fn, userEvent, within } from '@storybook/test'
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import Button from './Button.vue'
@@ -16,7 +16,7 @@ const meta = {
   args: {
     primary: false,
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-    onClick: fn(),
+    onClick: fn()
   },
 } satisfies Meta<typeof Button>
 
@@ -30,8 +30,24 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
   args: {
     primary: true,
-    label: 'Button',
+    label: 'Sample Button',
   },
+  play: async ({canvasElement}) => {
+    const canvas = within(canvasElement)
+    const button = canvas.getByRole('button', { name: /Sample Button/i})
+    await expect(button).toBeInTheDocument()
+    await userEvent.hover(button)
+    await expect(button).toHaveClass('storybook-button--hover')
+    await expect(button).toHaveStyle({
+      'opacity': 0.7
+    })
+    await expect(button).toHaveStyle({
+      'background-color': '#1ea7fd'
+    })
+    await userEvent.unhover(button)
+    await expect(button).not.toHaveClass('storybook-button--hover')
+    await userEvent.click(button)
+  }
 }
 
 export const Secondary: Story = {
