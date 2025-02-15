@@ -1,0 +1,22 @@
+# Directory pattern
+app:
+  - changed-files:
+    - any-glob-to-any-file: 'src/**'
+
+github_actions:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**'
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: 'docs/**'
+
+# Branch pattern
+feature:
+  - head-branch: ['^feature/']
+fix:
+  - head-branch: ['^fix/']
+hotfix:
+  - head-branch: ['^hotfix/']
+release:
+  - head-branch: ['^release/']
