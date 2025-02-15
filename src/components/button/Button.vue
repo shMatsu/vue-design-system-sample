@@ -37,7 +37,7 @@ const classes = computed(() => ({
   'storybook-button--primary': props.primary,
   'storybook-button--secondary': !props.primary,
   [`storybook-button--${props.size || 'medium'}`]: true,
-  'storybook-button--hover': hover.value
+  'storybook-button--hover': hover.value,
 }))
 
 const style = computed(() => ({
