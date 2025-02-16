@@ -1,0 +1,14 @@
+changelog:
+  categories:
+    - title: app changes
+      labels:
+        - app
+    - title: features
+      labels:
+        - feature
+    - title: bug fixes
+      labels:
+        - fix
+    - title: hotfixes
+      labels:
+        - hotfix
