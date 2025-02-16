@@ -42,6 +42,7 @@ jobs:
                   "previous_tag_name": "'${{ env.LATEST_TEST_TAG }}'",
                   "configuration_file_path": ".github/configs/release-notes.yml"
                 }')
+          echo "$release_notes"
           echo "$release_notes" > release_notes.md
 
       # Step 4: Create GitHub Release with generated release notes
