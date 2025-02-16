@@ -1,0 +1,53 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the release (e.g., v1.0.1)'
+        required: true
+        type: string
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository using v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Get the latest 'test-' tag (including the tag being created)
+      - name: Get latest 'test-' tag
+        id: latest_tag
+        run: |
+          latest_test_tag=$(git tag -l "test-*" --sort=-v:refname | head -n 1)
+          echo "Latest 'test-' tag: $latest_test_tag"
+          echo "LATEST_TEST_TAG=$latest_test_tag" >> $GITHUB_ENV
+
+      # Step 3: Create new tag and push it to remote
+      - name: Create new tag
+        run: |
+          git tag test-${{ github.event.inputs.version }}
+          git push origin test-${{ github.event.inputs.version }}
+          echo "CREATE_TAG=test-${{ github.event.inputs.version }}" >> $GITHUB_ENV
+
+      # Step 4: Generate release notes using GitHub API and configuration file
+      - name: Generate release notes
+        run: |
+          release_notes=$(curl -s -X POST https://api.github.com/repos/${{ github.repository }}/releases/generate-release-notes \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d '{
+                  "tag_name": "'test-${{ github.event.inputs.version }}'",
+                  "previous_tag_name": "'${{ env.LATEST_TEST_TAG }}'",
+                  "configuration_file_path": ".github/configs/release-notes.yml"
+                }')
+          echo "RELEASE_NOTES=${release_notes}" >> $GITHUB_ENV
+
+      # Step 4: Create GitHub Release with generated release notes
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release_notes.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
