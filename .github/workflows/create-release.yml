@@ -30,14 +30,7 @@ jobs:
         run: |
           echo "release_tag=test-${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
 
-      # Step 3: Create new tag and push it to remote
-      # - name: Create new tag
-      #   run: |
-      #     git tag test-${{ github.event.inputs.version }}
-      #     git push origin test-${{ github.event.inputs.version }}
-      #     echo "CREATE_TAG=test-${{ github.event.inputs.version }}" >> $GITHUB_ENV
-
-      # Step 4: Generate release notes using GitHub API and configuration file
+      # Step 3: Generate release notes using GitHub API and configuration file
       - name: Generate release notes
         id: changes
         run: |
@@ -62,15 +55,7 @@ jobs:
             ${{ steps.changes.outputs.changes }} \
             | sed 's/\\"//g' | sed 's/["“]//g')" >> $GITHUB_OUTPUT
 
-      # Step 4: Create GitHub Release with generated release notes
-      # - name: Create GitHub Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     tag_name: ${{ env.CREATE_TAG }}
-      #     files: release_notes.md
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      # Step 6: タグを切り、リリースノートを作成する
       - name: Create Release
         run: |
           response=$(curl -X POST \
